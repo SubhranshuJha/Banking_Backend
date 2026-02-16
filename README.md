@@ -5,7 +5,7 @@ It ensures every transaction is safely processed, recorded immutably, and reflec
 
 ---
 
-## 🚀 What This Project Does
+##  What This Project Does
 
 * Create accounts with balances
 * Transfer money between accounts
@@ -15,7 +15,7 @@ It ensures every transaction is safely processed, recorded immutably, and reflec
 
 ---
 
-## 🧾 Core Idea
+##  Core Idea
 
 Instead of directly changing balances, the system records **ledger entries** for each transaction:
 
@@ -26,7 +26,7 @@ This mimics how real banking systems maintain financial integrity.
 
 ---
 
-## 🔑 Key Features
+##  Key Features
 
 * Double‑entry ledger system
 * Idempotent transaction processing
@@ -36,7 +36,7 @@ This mimics how real banking systems maintain financial integrity.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 Node.js • Express • MongoDB • Mongoose
 
