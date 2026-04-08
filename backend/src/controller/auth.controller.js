@@ -45,20 +45,6 @@ const registerUser = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
     }
-<<<<<<< HEAD
-=======
-
-    const user = await userModel.create({
-        email,
-        name,
-        password
-    });
-
-    const token = jwt.sign({ userId: user._id }, wrhj243y84h2u3h4, { expiresIn: '3d' });
-    res.cookie('token', token, { httpOnly: true });
-    // await sendRegisterEmail(user.email, user.name);
-    return res.status(201).json({  success: true, message: "User registered successfully", user , token });
->>>>>>> 359d5bcba6a8d93ed60d97976cff3211b50c773f
 }
 
 const loginUser = async (req, res) => {
