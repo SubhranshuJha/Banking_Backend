@@ -4,14 +4,15 @@ import Footer from './Footer'
 
 const Home = () => {
   return (
+   
     <div>
       <Header />
       <div className=' flex justify-left p-5 h-100'>
-        <div className='bg-gray-200 p-10 rounded-lg shadow-lg w-96'>
+        <div className='bg-gray-200 p-10 rounded-lg shadow-lg w-100%'>
           <h2 className='text-2xl font-bold mb-6 text-center'>Welcome to the Bank</h2>
           <p className='text-gray-700 text-center'>Your trusted partner for all your banking needs.</p>
         </div>
-        <div className='bg-gray-200 p-10 rounded-lg shadow-lg w-96 ml-10'>
+        <div className='bg-gray-200 p-10 rounded-lg shadow-lg w-100% ml-10'>
           <h2 className='text-2xl font-bold mb-6 text-center'>Our Services</h2>
           <ul className='list-disc list-inside text-gray-700'>
             <li>Checking and Savings Accounts</li>
@@ -20,7 +21,7 @@ const Home = () => {
             <li>Online and Mobile Banking</li>
           </ul>
         </div>
-        <div className='bg-gray-200 p-10 rounded-lg shadow-lg w-96 ml-10'>
+        <div className='bg-gray-200 p-10 rounded-lg shadow-lg w-100% ml-10'>
           <h2 className='text-2xl font-bold mb-6 text-center'>Why Choose Us?</h2>
           <ul className='list-disc list-inside text-gray-700'>
             <li>Competitive Interest Rates</li>
