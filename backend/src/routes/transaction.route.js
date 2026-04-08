@@ -1,5 +1,5 @@
 import express from 'express';
-import { authMiddleware, authSystemUserMiddleware } from '../middleware/auth.middleware';
+import { authMiddleware, authSystemUserMiddleware } from '../middleware/auth.middleware.js';
 import { createTransaction, systemInitialFunds } from '../controller/transaction.controller.js';
 
 const transactionRouter = express.Router();

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 function connectDB() {
     
-    mongoose.connect(process.env.MONGO_URI)
+    mongoose.connect("mongodb://localhost:27017/banking_app")
     .then(() => {
         console.log('Connected to MongoDB');
     })
