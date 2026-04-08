@@ -1,6 +1,6 @@
 import e from "express";
 import mongoose from "mongoose";
-import accountModel from "./account.model";
+import accountModel from "./account.model.js";
 
 const transactionSchema = new mongoose.Schema({
     
