@@ -18,6 +18,7 @@ const Register = () => {
           password
         });
         console.log(res);
+        navigate('/'); // Navigate after successful registration
       } catch (error) {
         console.error("Error registering user:", error);
       }
@@ -30,8 +31,8 @@ const Register = () => {
         <h2 className='text-2xl font-bold mb-6 text-center'>Register</h2>
 
         <form onSubmit={(e) => {
-          e.preventDefault();
-          navigate('/') && sendData();
+          e.preventDefault();          
+          sendData()  ;
         }}>
 
 
