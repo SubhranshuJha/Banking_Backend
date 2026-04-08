@@ -1,8 +1,11 @@
 import React from 'react'
+import Header from './Header'
+import Footer from './Footer'
 
 const Home = () => {
   return (
     <div>
+      <Header />
       <div className=' flex justify-left p-5 h-100'>
         <div className='bg-gray-200 p-10 rounded-lg shadow-lg w-96'>
           <h2 className='text-2xl font-bold mb-6 text-center'>Welcome to the Bank</h2>
@@ -29,6 +32,7 @@ const Home = () => {
         
 
       </div>
+      <Footer />
     </div>
   )
 }
