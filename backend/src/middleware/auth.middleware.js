@@ -14,7 +14,7 @@ const authMiddleware = async (req, res, next) => {
             return res.status(401).json({ success: false, message: "Unauthorized" });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, wrhj243y84h2u3h4);
         const user = await userModel.findById(decoded.userId);
         if(!user){
             return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -41,7 +41,7 @@ const authSystemUserMiddleware = async (req, res, next) => {
             return res.status(401).json({ success: false, message: "Unauthorized" });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, wrhj243y84h2u3h4);
         const user = await userModel.findById(decoded.userId).select('+systemUser');
         if(!user || user.systemUser !== true){
             return res.status(401).json({ success: false, message: "Unauthorized" });
