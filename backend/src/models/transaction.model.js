@@ -1,6 +1,4 @@
-import e from "express";
 import mongoose from "mongoose";
-import accountModel from "./account.model.js";
 
 const transactionSchema = new mongoose.Schema({
     
@@ -19,6 +17,11 @@ const transactionSchema = new mongoose.Schema({
         type:String,
         enum : ['pending', 'completed', 'failed'],
         default:'pending'
+    },
+    type : {
+        type: String,
+        enum: ['transfer', 'system_funding'],
+        default: 'transfer'
     },
     amount : {
         type:Number,

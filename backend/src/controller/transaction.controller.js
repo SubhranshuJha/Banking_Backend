@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import accountModel from '../models/account.model.js';
 import transactionModel from '../models/transaction.model.js';
 import ledgerModel from '../models/ledger.model.js';        
-;
+import userModel from '../models/user.model.js';
 
 
 // the 10 steps 
@@ -20,7 +20,8 @@ import ledgerModel from '../models/ledger.model.js';
 
 
 const createTransaction = async (req, res) => {
-  const { fromAccount, toAccount, amount, idempotencyKey } = req.body;
+  const { fromAccount, toAccount, idempotencyKey } = req.body;
+  const amount = Number(req.body.amount);
 
   if (!fromAccount || !toAccount || !amount || !idempotencyKey) {
     return res.status(400).json({ message: "All fields required" });
@@ -53,6 +54,10 @@ const createTransaction = async (req, res) => {
       .session(session);
 
     if (!fromAcc || !toAcc) throw new Error("Account not found");
+
+    if (String(fromAcc.user) !== String(req.user._id)) {
+      throw new Error('Unauthorized source account');
+    }
 
     if (fromAcc.status !== "active" || toAcc.status !== "active")
       throw new Error("Inactive account");
@@ -112,7 +117,9 @@ const createTransaction = async (req, res) => {
       tx,
     });
   } catch (err) {
-    await session.abortTransaction();
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
     session.endSession();
 
     return res.status(500).json({
@@ -125,9 +132,11 @@ const createTransaction = async (req, res) => {
 
 const createInitialFundsTransaction = async ({
   toAccountId,
-  amount,
+  amount: inputAmount,
   idempotencyKey,
 }) => {
+  const amount = Number(inputAmount);
+
   if (!toAccountId || !amount || !idempotencyKey) {
     throw new Error("All fields required");
   }
@@ -149,8 +158,15 @@ const createInitialFundsTransaction = async ({
     if (!toAccount) throw new Error("Receiver account not found");
 
     // find system account
-    const systemAccount = await accountModel
+    const systemUser = await userModel
       .findOne({ systemUser: true })
+      .select('+systemUser')
+      .session(session);
+
+    if (!systemUser) throw new Error("System user missing");
+
+    const systemAccount = await accountModel
+      .findOne({ user: systemUser._id, status: 'active' })
       .session(session);
 
     if (!systemAccount) throw new Error("System account missing");
@@ -216,7 +232,9 @@ const createInitialFundsTransaction = async ({
 
     return tx;
   } catch (err) {
-    await session.abortTransaction();
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
     session.endSession();
     throw err;
   }

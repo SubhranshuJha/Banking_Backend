@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import legerModel from "./ledger.model.js";
+import ledgerModel from "./ledger.model.js";
 
 const accountSchema = new mongoose.Schema({
 
@@ -23,9 +23,9 @@ const accountSchema = new mongoose.Schema({
 
 accountSchema.index({ user: 1 , status: 1 });
 
-accountSchema.methods.getBalance = async function(){
+accountSchema.methods.getBalance = async function(options = {}){
 
-    const balanceData = await legerModel.aggregate([
+    const balanceData = await ledgerModel.aggregate([
         { $match: { account: this._id } },
         { $group: {
             _id: null,
@@ -41,7 +41,7 @@ accountSchema.methods.getBalance = async function(){
         }
         
         
-    ]) ;
+    ]).session(options.session || null);
 
     if ( balanceData.length ==0 ) return 0;
     return balanceData[0].balance;
