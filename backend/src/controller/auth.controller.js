@@ -1,6 +1,6 @@
 import tokenBlacklistModel from "../models/blacklist.model.js";
 import userModel from "../models/user.model.js";
-import { sendRegisterEmail } from "../services/email.service.js";
+// import { sendRegisterEmail } from "../services/email.service.js";
 import jwt from 'jsonwebtoken';
 
 
@@ -37,12 +37,14 @@ const registerUser = async (req, res) => {
             name,
             password
         });
+        console.log("JWT_SECRET 👉", process.env.JWT_SECRET);
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '3d' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET , { expiresIn: '3d' });
         res.cookie('token', token, buildCookieOptions());
         // await sendRegisterEmail(user.email, user.name);
         return res.status(201).json({  success: true, message: "User registered successfully", user: sanitizeUser(user), token });
     } catch (error) {
+        console.error("REGISTER ERROR 👉", error); 
         return res.status(500).json({ success: false, message: error.message });
     }
 }
