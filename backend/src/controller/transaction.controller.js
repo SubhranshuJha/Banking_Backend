@@ -24,11 +24,22 @@ const createTransaction = async (req, res) => {
   const amount = Number(req.body.amount);
 
   if (!fromAccount || !toAccount || !amount || !idempotencyKey) {
-    return res.status(400).json({ message: "All fields required" });
+    return res.status(400).json({ success: false, message: "All fields required" });
   }
 
   if (amount <= 0) {
-    return res.status(400).json({ message: "Invalid amount" });
+    return res.status(400).json({ success: false, message: "Invalid amount" });
+  }
+
+  if (
+    !mongoose.Types.ObjectId.isValid(fromAccount) ||
+    !mongoose.Types.ObjectId.isValid(toAccount)
+  ) {
+    return res.status(400).json({ success: false, message: "Invalid account id" });
+  }
+
+  if (fromAccount === toAccount) {
+    return res.status(400).json({ success: false, message: "Source and destination accounts must be different" });
   }
 
   const session = await mongoose.startSession();
@@ -42,7 +53,8 @@ const createTransaction = async (req, res) => {
 
     if (existingTx) {
       await session.abortTransaction();
-      return res.status(200).json({ message: "Already processed", existingTx });
+      session.endSession();
+      return res.status(200).json({ success: true, message: "Already processed", existingTx });
     }
 
     const fromAcc = await accountModel
@@ -53,7 +65,9 @@ const createTransaction = async (req, res) => {
       .findById(toAccount)
       .session(session);
 
-    if (!fromAcc || !toAcc) throw new Error("Account not found");
+    if (!fromAcc || !toAcc) {
+      throw new Error("Account not found");
+    }
 
     if (String(fromAcc.user) !== String(req.user._id)) {
       throw new Error('Unauthorized source account');
@@ -145,6 +159,10 @@ const createInitialFundsTransaction = async ({
     throw new Error("Invalid amount");
   }
 
+  if (!mongoose.Types.ObjectId.isValid(toAccountId)) {
+    throw new Error("Invalid account id");
+  }
+
   const session = await mongoose.startSession();
 
   try {
@@ -178,6 +196,7 @@ const createInitialFundsTransaction = async ({
 
     if (existing) {
       await session.abortTransaction();
+      session.endSession();
       return existing;
     }
 

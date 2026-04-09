@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 
 async function connectDB() {
-    if (!"mongodb://localhost:27017/banking_app") {
+    const mongoUri = process.env.MONGO_URI || "mongodb://localhost:27017/banking_app";
+
+    if (!mongoUri) {
         throw new Error('MONGO_URI is not configured');
     }
 
-    await mongoose.connect("mongodb://localhost:27017/banking_app");
+    await mongoose.connect(mongoUri);
     console.log('Connected to MongoDB');
 }
 

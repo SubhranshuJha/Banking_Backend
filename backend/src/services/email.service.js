@@ -11,15 +11,29 @@ const trasporter = nodemailer.createTransport({
     }
 });
 
-trasporter.verify((error, success) => {
-    if(error){
-        console.log(error); 
-    }else{
-        console.log("Email service is ready to send emails");
-    }
-});
+const hasEmailConfig = Boolean(
+    process.env.EMAIL &&
+    process.env.EMAIL_CLIENT_ID &&
+    process.env.EMAIL_CLIENT_SECRET &&
+    process.env.EMAIL_REFRESH_TOKEN
+);
+
+if (hasEmailConfig) {
+    trasporter.verify((error) => {
+        if(error){
+            console.log("Email service verification failed:", error.message); 
+        }else{
+            console.log("Email service is ready to send emails");
+        }
+    });
+}
 
 const sendEmail = async (to, subject, text) => {
+    if (!hasEmailConfig) {
+        console.warn("Email config missing. Skipping email send.");
+        return;
+    }
+
     const mailOptions = {
         from: process.env.EMAIL,    
         to,
