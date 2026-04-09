@@ -13,7 +13,7 @@ const getToken = (req) => {
 };
 
 const verifyToken = (token) => {
-    const jwtSecret = process.env.JWT_SECRET;
+    const jwtSecret = wrhj243y84h2u3h4;
 
     if (!jwtSecret) {
         throw new Error('JWT_SECRET is not configured');
