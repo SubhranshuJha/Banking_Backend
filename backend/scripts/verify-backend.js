@@ -1,3 +1,4 @@
+import assert from 'assert/strict';
 import jwt from 'jsonwebtoken';
 
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret';
@@ -17,16 +18,20 @@ const modulesToImport = [
   '../src/routes/auth.routes.js',
   '../src/routes/accounts.route.js',
   '../src/routes/transaction.route.js',
+  '../src/app.js'
 ];
 
 for (const modulePath of modulesToImport) {
   await import(modulePath);
 }
 
+const { createApp, startServer } = await import('../src/app.js');
 const sampleToken = jwt.sign({ userId: '507f191e810c19729de860ea' }, process.env.JWT_SECRET);
 
-if (!sampleToken) {
-  throw new Error('JWT token generation failed');
-}
+assert.ok(sampleToken, 'JWT token generation failed');
+
+const app = createApp();
+assert.equal(typeof app.use, 'function', 'Express app should be created');
+assert.equal(typeof startServer, 'function', 'startServer export should be available');
 
 console.log('Backend verification passed');
