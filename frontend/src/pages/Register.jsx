@@ -9,6 +9,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
 
   const sendData = async () =>{
       try {
@@ -17,10 +18,14 @@ const Register = () => {
           email,
           password
         });
-        console.log(res);
-        navigate('/'); // Navigate after successful registration
+        
+        localStorage.setItem("token", res.data.token);
+        console.log(res.data);
+        alert("Registration successful");
+        navigate('/'); 
       } catch (error) {
         console.error("Error registering user:", error);
+        alert("Registration failed");
       }
   }
 
@@ -32,7 +37,7 @@ const Register = () => {
 
         <form onSubmit={(e) => {
           e.preventDefault();          
-          sendData()  ;
+          sendData();
         }}>
 
 

@@ -3,7 +3,7 @@ import userModel from "../models/user.model.js";
 // import { sendRegisterEmail } from "../services/email.service.js";
 import jwt from 'jsonwebtoken';
 
-
+const SECRET = "mysecretkey123";
 const buildCookieOptions = () => ({
     httpOnly: true,
     sameSite: 'lax',
@@ -37,9 +37,9 @@ const registerUser = async (req, res) => {
             name,
             password
         });
-        console.log("JWT_SECRET 👉", process.env.JWT_SECRET);
+        console.log("JWT_SECRET 👉", SECRET);
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET , { expiresIn: '3d' });
+        const token = jwt.sign({ userId: user._id }, SECRET, { expiresIn: '3d' });
         res.cookie('token', token, buildCookieOptions());
         // await sendRegisterEmail(user.email, user.name);
         return res.status(201).json({  success: true, message: "User registered successfully", user: sanitizeUser(user), token });
@@ -68,7 +68,7 @@ const loginUser = async (req, res) => {
             return res.status(401).json({  success: false, message: "Invalid password" });
         }
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '3d' });
+        const token = jwt.sign({ userId: user._id }, SECRET, { expiresIn: '3d' });
         res.cookie('token', token, buildCookieOptions());
         return res.status(200).json({  success: true, message: "User logged in successfully", user: sanitizeUser(user), token });
     } catch (error) {
