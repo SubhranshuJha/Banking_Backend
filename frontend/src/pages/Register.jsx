@@ -31,8 +31,10 @@ const Register = () => {
   return (
     <div className='flex items-center justify-center h-100'>
       <div className='bg-gray-100 p-10 rounded-lg shadow-lg w-100%'>
-
+        <span className='text-blue-500 cursor-pointer'
+          onClick={() => navigate('/')}>Home Page</span>
         <h2 className='text-2xl font-bold mb-6 text-center'>Register</h2>
+        
 
         <form onSubmit={(e) => {
           e.preventDefault();          
@@ -65,6 +67,10 @@ const Register = () => {
           >
             Register</button>
         </form>
+        <br />
+        <h3 className='text-center mb-6'>Already have an account?
+          <span className='text-blue-500 cursor-pointer'
+            onClick={() => navigate('/login')}>Login here</span></h3>
       </div>
     </div>
   )

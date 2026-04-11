@@ -19,7 +19,7 @@ const Login = () => {
             console.log(res.data);
             alert("Login successful");
             localStorage.setItem("token", res.data.token);
-            navigate('/dashboard');
+            navigate('/createac');
 
         } catch (error) {
             console.error("Error logging in:", error);
@@ -30,6 +30,8 @@ const Login = () => {
 
         <div className='flex items-center justify-center h-100'>
             <div className='bg-gray-200 p-10 rounded-lg shadow-lg w-96'>
+                <span className='text-blue-500 cursor-pointer'
+                    onClick={() => navigate('/')}>Home Page</span>
                 <h2 className='text-2xl font-bold mb-6 text-center'>Login</h2>
                 <form onSubmit={(e) => {
                     e.preventDefault();
@@ -47,6 +49,10 @@ const Login = () => {
                     />
                     <button type="submit" className='w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600'>Login</button>
                 </form>
+                <br />
+                <h3 className='text-center mt-6'>Don't have an account?
+                    <span className='text-blue-500 cursor-pointer'
+                        onClick={() => navigate('/register')}> Register here</span></h3>
             </div>
         </div>
 

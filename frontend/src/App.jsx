@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import Transaction from './pages/Transaction'
+import CreateAc from './pages/CreateAc'
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/transaction' element={<Transaction />} />
+          <Route path='/createac' element={<CreateAc />} />
         </Routes>
       </div>
       
