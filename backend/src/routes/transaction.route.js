@@ -6,6 +6,7 @@ const transactionRouter = express.Router();
 
 transactionRouter.post('/create', authMiddleware, createTransaction ) ;
 transactionRouter.post('/system-initialFunds', authSystemUserMiddleware ,systemInitialFunds ) ;
+transactionRouter.post('/system-initial-funds', authSystemUserMiddleware, systemInitialFunds);
 
 
 export default transactionRouter;
