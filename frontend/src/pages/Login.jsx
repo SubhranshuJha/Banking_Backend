@@ -16,9 +16,10 @@ const Login = () => {
                 password
             });
 
-            console.log(res.data);
-            alert("Login successful");
+           
             localStorage.setItem("token", res.data.token);
+            alert("Login successful");
+            
             navigate('/createac');
 
         } catch (error) {

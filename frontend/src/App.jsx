@@ -7,14 +7,18 @@ import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import Transaction from './pages/Transaction'
 import CreateAc from './pages/CreateAc'
+import UserContext from './context/UserContext'
+
 
 
 const App = () => {
   
   return (
+    
     <div>
       
       <div>
+        <UserContext>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/register' element={<Register />} />
@@ -23,8 +27,9 @@ const App = () => {
           <Route path='/transaction' element={<Transaction />} />
           <Route path='/createac' element={<CreateAc />} />
         </Routes>
-      </div>
       
+      </UserContext>
+      </div>
     </div>
   )
 }
