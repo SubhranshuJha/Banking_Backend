@@ -18,6 +18,7 @@ const Login = () => {
 
            
             localStorage.setItem("token", res.data.token);
+            console.log("Login successful, token stored:", res.data.token);
             alert("Login successful");
             
             navigate('/createac');
