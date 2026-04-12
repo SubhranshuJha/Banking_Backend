@@ -21,7 +21,7 @@ const Transaction = () => {
         try {
             const token = localStorage.getItem("token");
             const res = await axios.post("http://localhost:8000/api/transactions/create", formData, {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
             alert(res.data.message || "Transfer Successful");
             navigate('/dashboard');

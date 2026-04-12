@@ -13,9 +13,9 @@ const Dashboard = () => {
             try {
                 const token = localStorage.getItem("token");
                 const res = await axios.get("http://localhost:8000/api/accounts/get", {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
                 });
-                // Note: API returns key 'account'
+                
                 setAccounts(res.data.account || []);
             } catch (err) {
                 console.error("Fetch error", err);
